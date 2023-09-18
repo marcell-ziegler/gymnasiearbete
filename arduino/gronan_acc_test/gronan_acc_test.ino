@@ -3,21 +3,33 @@
 #include <Adafruit_MPU6050.h>
 #include <Adafruit_Sensor.h>
 #include <Wire.h>
+#include <SPI.h>
 #include <SD.h>
 
 #define PIN_SPI_CS 4
 
 Adafruit_MPU6050 mpu;
 
-const float x_acc_offset = 0.425;
-const float y_acc_offset = 0;
-const float z_acc_offset = 0.9;
+float x_acc_offset;
+float y_acc_offset;
+float z_acc_offset;
+
+const float x_acc_ref = 0;
+const float y_acc_ref = 0;
+const float z_acc_ref = 9.82;
+
+int reset_last_state = HIGH;
+int start_stop_last_state = HIGH;
+
+
+File data_file;
+
+bool started = true;
+
+
 
 void setup(void) {
   Serial.begin(115200);
-  while (!Serial)
-    delay(10); // will pause Zero, Leonardo, etc until serial console opens
-
   Serial.println("Adafruit MPU6050 test!");
 
   // Try to initialize!
@@ -91,21 +103,101 @@ void setup(void) {
   Serial.println("");
   delay(100);
 
-  
+  pinMode(7, INPUT_PULLUP);
+  pinMode(8, INPUT_PULLUP);
+
+  randomSeed(analogRead(A0));
+
+  // Init SD Card Reader
+  if (!SD.begin(PIN_SPI_CS)) {
+    Serial.println(F("SD CARD FAILED."));
+    while (1) {
+      delay(10);
+    }
+  } else {
+    Serial.println("SD Card Initialized!");
+  }
+
+  data_file = SD.open("test.txt", FILE_WRITE);
+
+  if (data_file) {
+    Serial.println("File opened!");
+  } else {
+    Serial.println("File unopened!");
+  }
+
+  // Calibrate sensor
+  sensors_event_t init_a, init_g, init_temp;
+  mpu.getEvent(&init_a, &init_g, &init_temp);
+
+  x_acc_offset = x_acc_ref - init_a.acceleration.x;
+  y_acc_offset = y_acc_ref - init_a.acceleration.y;
+  z_acc_offset = z_acc_ref - init_a.acceleration.z;
 }
 
 void loop() {
   /* Get new sensor events with the readings */
   sensors_event_t a, g, temp;
   mpu.getEvent(&a, &g, &temp);
-
   
-/* Plotter printing */
-  Serial.print(a.acceleration.x + x_acc_offset);
-  Serial.print(",");
-  Serial.print(a.acceleration.y + y_acc_offset);
-  Serial.print(",");
-  Serial.print(a.acceleration.z + z_acc_offset);
+  int reset_current_state = digitalRead(8);
+  int start_stop_current_state = digitalRead(7);
+
+  // Serial.print("Reset state: ");
+  // Serial.println(reset_current_state);
+  // Serial.print("Start state: ");
+  // Serial.println(start_stop_current_state);
+
+  if (reset_last_state == LOW && reset_current_state == HIGH) {
+    Serial.println("Reset!");
+    
+    x_acc_offset = x_acc_ref - a.acceleration.x;
+    y_acc_offset = y_acc_ref - a.acceleration.y;
+    z_acc_offset = z_acc_ref - a.acceleration.z;
+  }
+
+  if (start_stop_last_state == LOW && start_stop_current_state == HIGH) {
+    if (started && data_file) {
+      Serial.println("Stopped!");
+
+      data_file.close();
+      started = false;
+    }
+
+    if (!started) {
+      Serial.println("Starting!");
+      data_file = SD.open(String(random()) + ".txt");
+      started = true;
+    }
+  }
+
+  if (started && data_file) {
+    float x_acc = a.acceleration.x + x_acc_offset;
+    float y_acc = a.acceleration.y + y_acc_offset; 
+    float z_acc = a.acceleration.z + z_acc_offset; 
+
+    data_file.print(x_acc);
+    data_file.print(",");
+    data_file.print(y_acc);
+    data_file.print(",");
+    data_file.print(z_acc);
+    data_file.println("");
+
+    Serial.print(x_acc);
+    Serial.print(",");
+    Serial.print(y_acc);
+    Serial.print(",");
+    Serial.print(z_acc);
+    Serial.println("");
+  }
+
+
+  /* Plotter printing */
+  // Serial.print(a.acceleration.x + x_acc_offset);
+  // Serial.print(",");
+  // Serial.print(a.acceleration.y + y_acc_offset);
+  // Serial.print(",");
+  // Serial.print(a.acceleration.z + z_acc_offset);
 
   /* Print out the values */
   // Serial.print("Acceleration X: ");
@@ -128,6 +220,9 @@ void loop() {
   // Serial.print(temp.temperature);
   // Serial.println(" degC");
 
-  Serial.println("");
+
+  reset_last_state = reset_current_state;
+  start_stop_last_state = start_stop_current_state;
+  // Serial.println("");
   delay(50);
 }
