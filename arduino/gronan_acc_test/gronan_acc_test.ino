@@ -139,7 +139,7 @@ void loop() {
   /* Get new sensor events with the readings */
   sensors_event_t a, g, temp;
   mpu.getEvent(&a, &g, &temp);
-  
+
   int reset_current_state = digitalRead(8);
   int start_stop_current_state = digitalRead(7);
 
@@ -150,7 +150,7 @@ void loop() {
 
   if (reset_last_state == LOW && reset_current_state == HIGH) {
     Serial.println("Reset!");
-    
+
     x_acc_offset = x_acc_ref - a.acceleration.x;
     y_acc_offset = y_acc_ref - a.acceleration.y;
     z_acc_offset = z_acc_ref - a.acceleration.z;
@@ -173,8 +173,8 @@ void loop() {
 
   if (started && data_file) {
     float x_acc = a.acceleration.x + x_acc_offset;
-    float y_acc = a.acceleration.y + y_acc_offset; 
-    float z_acc = a.acceleration.z + z_acc_offset; 
+    float y_acc = a.acceleration.y + y_acc_offset;
+    float z_acc = a.acceleration.z + z_acc_offset;
 
     data_file.print(x_acc);
     data_file.print(",");
