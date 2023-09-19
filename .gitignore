@@ -1,3 +1,9 @@
+## VSCode
+.vscode
+
+## Arduino build
+arduino/build
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
