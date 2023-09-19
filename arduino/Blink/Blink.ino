@@ -21,12 +21,23 @@ struct Vec3
     float z;
 };
 
+float avg(float array[])
+{
+    int size = sizeof(array) / sizeof(float);
+    float sum = 0;
+    for (int i = 0; i < size; i++)
+    {
+        sum += array[i];
+    }
+    return sum / size;
+}
+
 class MPU6050
 {
 public:
     Adafruit_MPU6050 device;
     Vec3 offset = {0, 0, 0};
-    Vec3 reference = {0, 0, 9.82};
+    Vec3 reference = {0, 0, 0};
 
     Vec3 getAcceleration()
     {
@@ -245,19 +256,25 @@ void record()
     }
 
     blink(2, 100);
-    // File f = SD.open(filename, FILE_WRITE);
+    File f = SD.open(filename, FILE_WRITE);
     Serial.println("Recording to: " + filename);
 
-    // if (!f)
-    // {
-    //     blink(1, 1000);
-    //     Serial.println("error opening " + filename);
-    //     return;
-    // }
+    if (!f)
+    {
+        blink(1, 1000);
+        Serial.println("error opening " + filename);
+        return;
+    }
 
     while (!(startButton.state == HIGH && startButton.lastState == LOW))
     {
         Vec3 a = mpu.getAcceleration();
+        f.println(
+            String(a.x) +
+            "," +
+            String(a.y) +
+            "," +
+            String(a.z));
         Serial.println(
             String(a.x) +
             "," +
@@ -268,7 +285,7 @@ void record()
         startButton.lastState = startButton.state;
         startButton.state = digitalRead(startButton.pin);
     }
-    // f.close();
+    f.close();
     Serial.println("Recording done.");
     blink(4, 100);
     return;
