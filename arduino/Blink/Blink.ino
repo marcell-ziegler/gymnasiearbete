@@ -132,11 +132,11 @@ void setup()
     if (!SD.begin(4))
     {
         Serial.println("SD initialization failed!");
+        digitalWrite(LED_PIN, HIGH);
         while (1)
         {
             ;
         }
-        digitalWrite(LED_PIN, HIGH);
     }
     else
     {
@@ -151,11 +151,11 @@ void setup()
     if (!mpu.device.begin())
     {
         Serial.println("Failed to find MPU6050 chip");
+        digitalWrite(LED_PIN, HIGH);
         while (1)
         {
             ;
         }
-        digitalWrite(LED_PIN, HIGH);
     }
     else
     {
@@ -227,10 +227,51 @@ void setup()
     }
 
     Serial.println("");
+    mpu.calibrate();
 #pragma endregion
 
     // Get random
     randomSeed(analogRead(A0));
+}
+
+void record()
+{
+    String filename = String(random(MAX_RANDOM)) + ".csv";
+    if (SD.exists(filename))
+    {
+        blink(1, 1000);
+        Serial.println(filename + " invalid or exists.");
+        return;
+    }
+
+    blink(2, 100);
+    // File f = SD.open(filename, FILE_WRITE);
+    Serial.println("Recording to: " + filename);
+
+    // if (!f)
+    // {
+    //     blink(1, 1000);
+    //     Serial.println("error opening " + filename);
+    //     return;
+    // }
+
+    while (!(startButton.state == HIGH && startButton.lastState == LOW))
+    {
+        Vec3 a = mpu.getAcceleration();
+        Serial.println(
+            String(a.x) +
+            "," +
+            String(a.y) +
+            "," +
+            String(a.z));
+        delay(50);
+        startButton.lastState = startButton.state;
+        startButton.state = digitalRead(startButton.pin);
+    }
+    // f.close();
+    Serial.println("Recording done.");
+    blink(4, 100);
+    return;
 }
 
 void loop()
@@ -238,9 +279,12 @@ void loop()
     // Get button states
     startButton.state = digitalRead(startButton.pin);
     // If button is pressed, write random
-    if (startButton.state == LOW && startButton.lastState == HIGH)
+    if (startButton.state == HIGH && startButton.lastState == LOW)
     {
-        writeRandom();
+        startButton.state = LOW;
+        startButton.lastState = LOW;
+        delay(500);
+        record();
     }
 
     delay(50);
