@@ -21,41 +21,72 @@ struct Vec3
     float z;
 };
 
-float avg(float array[])
-{
-    int size = sizeof(array) / sizeof(float);
-    float sum = 0;
-    for (int i = 0; i < size; i++)
-    {
-        sum += array[i];
-    }
-    return sum / size;
-}
+Vec3 reference = {0, 0, 0};
 
 class MPU6050
 {
 public:
     Adafruit_MPU6050 device;
     Vec3 offset = {0, 0, 0};
-    Vec3 reference = {0, 0, 0};
 
     Vec3 getAcceleration()
     {
         sensors_event_t a, g, temp;
         device.getEvent(&a, &g, &temp);
-        return {
-            a.acceleration.x + this->offset.x,
-            a.acceleration.y + this->offset.y,
-            a.acceleration.z + this->offset.z};
+        return Vec3{
+            (a.acceleration.x + this->offset.x),
+            (a.acceleration.y + this->offset.y),
+            (a.acceleration.z + this->offset.z)};
     }
 
     void calibrate()
     {
-        Vec3 current = getAcceleration();
+        Serial.print("Calibrating accelerometer");
+        this->getAcceleration(); // Get first value
+        for (int i = 0; i < 3; i++)
+        {
+            Serial.print(".");
+            delay(500);
+        }
+        Serial.println("");
+
+        float x = 0;
+        float y = 0;
+        float z = 0;
+
+        for (int i = 0; i < 50; i++)
+        {
+            Vec3 a = this->getAcceleration();
+            float x_acc = a.x;
+            float y_acc = a.y;
+            float z_acc = a.z;
+
+            Serial.println(
+                String(x_acc) +
+                "," +
+                String(y_acc) +
+                "," +
+                String(z_acc));
+
+            x += x_acc;
+            y += y_acc;
+            z += z_acc;
+        }
+
+        Serial.println("Calibration done.");
+        Serial.println("Avg:");
+        Serial.println(
+            String(x / 50) +
+            "," +
+            String(y / 50) +
+            "," +
+            String(z / 50));
+
         this->offset = {
-            reference.x - current.x,
-            reference.y - current.y,
-            reference.z - current.z};
+            reference.x - (x / 50),
+            reference.y - (y / 50),
+            reference.z - (z / 50)};
+        ;
     }
 };
 
@@ -268,6 +299,7 @@ void record()
 
     while (!(startButton.state == HIGH && startButton.lastState == LOW))
     {
+        // Serial.println("Hej");
         Vec3 a = mpu.getAcceleration();
         f.println(
             String(a.x) +
@@ -275,6 +307,7 @@ void record()
             String(a.y) +
             "," +
             String(a.z));
+        // Serial.println("Hej2");
         Serial.println(
             String(a.x) +
             "," +
