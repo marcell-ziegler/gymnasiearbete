@@ -9,6 +9,44 @@ The SD card circuit:
 
 #include <SD.h>
 #include <SPI.h>
+#include <Adafruit_MPU6050.h>
+#include <Adafruit_Sensor.h>
+#include <Wire.h>
+
+#define PIN_SPI_CS 4
+struct Vec3
+{
+    float x;
+    float y;
+    float z;
+};
+
+class MPU6050
+{
+public:
+    Adafruit_MPU6050 device;
+    Vec3 offset = {0, 0, 0};
+    Vec3 reference = {0, 0, 9.82};
+
+    Vec3 getAcceleration()
+    {
+        sensors_event_t a, g, temp;
+        device.getEvent(&a, &g, &temp);
+        return {
+            a.acceleration.x + this->offset.x,
+            a.acceleration.y + this->offset.y,
+            a.acceleration.z + this->offset.z};
+    }
+
+    void calibrate()
+    {
+        Vec3 current = getAcceleration();
+        this->offset = {
+            reference.x - current.x,
+            reference.y - current.y,
+            reference.z - current.z};
+    }
+};
 
 const int MAX_RANDOM = 99999999;
 const int LED_PIN = 2;
