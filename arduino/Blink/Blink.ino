@@ -48,6 +48,8 @@ public:
     }
 };
 
+MPU6050 mpu;
+
 const int MAX_RANDOM = 99999999;
 const int LED_PIN = 2;
 
@@ -129,16 +131,35 @@ void setup()
     // Initialize SD card
     if (!SD.begin(4))
     {
-        Serial.println("initialization failed!");
+        Serial.println("SD initialization failed!");
         while (1)
         {
             ;
         }
+        digitalWrite(LED_PIN, HIGH);
     }
     else
     {
-        Serial.println("initialization done.");
+        Serial.println("SD initialization done.");
         blink(5);
+    }
+
+    delay(500);
+
+    // Init accelerometer
+    if (!mpu.device.begin())
+    {
+        Serial.println("Failed to find MPU6050 chip");
+        while (1)
+        {
+            ;
+        }
+        digitalWrite(LED_PIN, HIGH);
+    }
+    else
+    {
+        Serial.println("MPU6050 Found!");
+        blink(3);
     }
 
     // Get random
