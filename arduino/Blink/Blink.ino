@@ -111,7 +111,6 @@ void loop()
 {
     // Get button states
     startButton.state = digitalRead(startButton.pin);
-    Serial.println("BRUH");
     // If button is pressed, write random
     if (startButton.state == LOW && startButton.lastState == HIGH)
     {
