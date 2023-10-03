@@ -17,4 +17,17 @@
     urlcolor=blue,
     linktoc=all
 }
+\usepackage{siunitx}
+\sisetup{
+  range-phrase=--,
+  detect-all,
+  output-decimal-marker={,},
+  %round-mode=places, % Use these if you want to force yourself to think about how many decimals you actually have
+  %round-precision=0, %
+  range-units=single,
+  per-mode=symbol,
+  % change fraction to reciprocal if you want ^{-1}
+  per-symbol={\ensuremath{{}/{}}},
+  inter-unit-product={\ensuremath{{}\cdot{}}},
+}
 \usepackage[swedish]{cleveref}
