@@ -10,9 +10,48 @@ Beskriv här syftet, alltså varför ni vill göra just i den här undersökning
 Längd: Ett par meningar
 
 \subsection{Frågeställning och hypotes}
-Frågeställningen ska precisera syftet. Formulera frågeställningen som en fråga som ni kan svara på när ni har genomfört undersökningen. Ni kan till exempel börja med: I det här arbetet frågar vi om …
-Det går inte alltid att ställa hypoteser, men om det går gör på följande sätt: Skriv er hypotes som ett möjligt svar på frågeställningen. Förklara därefter hur ni kom fram till hypotesen. Använd det ni vet om ämnesområdet som stöd för er förklaring. Källhänvisa. Börja med: Vår hypotes är … eller Vi har hypotesen att … Det är viktigt att ni skriver tydligt hur ni resonerade er fram till hypotesen med hjälp av den kunskap som redan finns om ämnesområdet i litteraturen. Ett sätt att göra det är att använda ord som visar orsakssamband: eftersom, sedan, genom, som resultat av, därför, följaktligen etc. Till exempel: Eftersom blodtrycket ökar efter ansträngning (källhänvisning), ställde vi hypotesen att … Om hypotesen inte går att testa direkt, formulera en testbar förutsägelse. Börja till exempel med: Om vår hypotes stämmer, borde undersökningen visa att …
-Längd: Ett par stycken
+\textbf{Fråga:} ''Vad är den maximala hastigheten ett modelltåg i skala 1:40 kan uppnå vid en given kurvradie utan att spåra ur?''
+
+\textbf{Hypotes:} Betrakta en järnvägsvagn i en vän3stersväng. Utgående från tågets referenssystem kommer kraftsituationen se ut som i \cref{fig:tåg_krafter_sväng}. Tyngdkraften ges som $F_g = mg$ där $m$ är tågets massa och tyngdaccelerationen $g\approx \SI{9.82}{\m\per\s\squared}$. Tågets centripetalacceleration $a_c$ ges som
+\begin{equation}
+        a_c = \frac{v^2}{r}
+\end{equation}
+ där $v$ är tågets hastighet tangent med svängen och $r$ är svängens radie. Därefter ges centripetalkraften $F_\mathrm{centripetal}$ genom att sätta $F = ma$ som
+ \begin{equation}
+    F_\mathrm{centripetal} = ma_c = \frac{mv^2}{r}.
+ \end{equation}
+ I tågets accelererande referenssystem kommer även centrifugalkraften $F_c$ finnas som
+ \begin{equation}
+    \vec F_c = -\vec F_\mathrm{centripetal}
+ \end{equation}
+ där sambandet $|\vec F_\mathrm{centripetal}| = |\vec F_c|$ gäller.
+
+Både $F_c$ och $F_g$ utgör moment på fordonet kring en axel (se \cref{fig:tåg_krafter_sväng}). Dessa ges som
+\begin{gather}
+    M_g = F_g l_g \\
+    M_c = F_c l_c.
+\end{gather}
+Man kan sedan intuitivt lista ut att tåget kommer välta när $M_g < M_c$  om positivt moment är utåt svängens riktning. Detta ger följande samband:
+\begin{align*}
+    M_g &< M_c \\
+    F_g l_g &< F_c l_c \\
+    mg l_g &< \frac{mv^2}{r} l_c \\
+    g l_g &< \frac{v^2}{r} l_c \\
+    g r \frac{l_g}{l_c} &< v^2 \\
+    \left\{
+        \begin{array}{l}
+            v > \sqrt{g r \frac{l_g}{l_c}} \\
+            v < -\sqrt{g r \frac{l_g}{l_c}}
+        \end{array}
+    \right.
+\end{align*}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.33\textwidth]{fig/tåg_krafter.png}
+    \caption{Kraftsituationen på en järnvägsvagn vid en vänstersväng där $F_g$ är tyngdkraften, $F_c$ är centrifugalkraften och $l_g$ respektive $l_c$ är deras momentarmar till rotationsaxeln A.}
+    \label{fig:tåg_krafter_sväng}
+\end{figure}
 
 \subsection{Empirisk metod}
 Skriv en kortfattad beskrivning av hur ni planerar att genomföra undersökningen och vilket material ni tänker att använda. Skriv också om, och i så fall hur, ni tänker använda kontroller och hur många upprepningar, replikat, ni kommer att ha. Källhänvisa om ni har hittat metoden i någon annans arbete. För att göra metodbeskrivningen tydlig, använd ord som: sedan, efter, därefter, slutligen, för det första, för det andra, för det tredje, etc. Skriv i löpande text och inte i en punktlista. Skriv om olika metoder under var sin underrubrik.
@@ -21,7 +60,7 @@ Analytisk metod
 Beskriv hur ni planerar att analysera de data ni samlat in samt vilka beräkningar och formler ni då kommer att använda. Källhänvisa om ni har hittat analysmetoden i någon annans arbete.
 Längd: Ett par stycken.
 
-Materialen som kommer användas under undersökningen kommer vara: ett 3D printad tåg som väger ca 1,4 kg, en kamera som filmar i minst 240 FPS, ett stativ för att hålla kameran, rutat papper (med sidlängd 1 cm), 3D printade räls segment. 
+Materialen som kommer användas under undersökningen kommer vara: ett 3D printad tåg som väger ca 1,4 kg, en kamera som filmar i minst 240 FPS, ett stativ för att hålla kameran, rutat papper (med sidlängd 1 cm), 3D printade rälssegment.
 
 Undersökningen kommer ske genom att det först väljs en viss radie. Därefter kommer tåget placeras på toppen av en backe med bestämd höjd. Målet med detta är att ge tåget en bestämd hastighet baserad på potentiell energi överförd till kinetisk energi. Sedan släpps tåget och resultaten från kameran och om den spårade ur eller ej skrivs ned. Om tåget inte har spårat ur kommer tåget placeras på en högre höjd och denna process repeteras tills tåget spårar ur. När tåget spårat ur välj en ny radie på kurvan och hela processen börjar om från början. När alla radier har testats kommer data skrivas in i en graf där hastigheten och radien är grafens axlar.
 
