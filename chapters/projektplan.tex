@@ -1,19 +1,51 @@
 \section{Projektplan}
 \subsection{Teoretisk bakgrund}
-När ett tåg ska svänga finns det flera aspekter som måste tas hänsyn till, där kurvradien och hastigheten är två av dem. Om denna radie är för liten eller om tågets hastighet är för hög kommer tåget vältas. Detta eftersom centrifugalkraften flyttar tyngdpunkten så den överskrider rotationsaxeln.
+Under ideell kurvtagning verkar två krafter på ett järnvägsfordon: centrifugalkraften $F_c$ och tyngdkraften $F_g$ \parencite{carlos}. I en icke-doserad kurva ser krafterna ut som i \cref{fig:tågkrafter}. Detta innebär även att
+\begin{align}
+    F_c &= \frac{v^2}{r} \\
+    F_g &= mg
+\end{align}
+där $v$ är tågets hastighet tangent med kurvan, $r$ är kurvans radie, $m$ är tågets massa och tyngdaccelerationen $g\approx \SI{9.82}{\m\per\s\squared}$.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{fig/placeholder.png}
+    \caption{PLACEHOLDER. Tagen från \textcite{carlos}.}
+    \label{fig:tågkrafter}
+\end{figure}
+
+
+\subsubsection{Kurvdosering och rälsförhöjning}
+När en kurva doseras förändras kraftsituationen, som visat i \cref{fig:tågkrafter_doserad}. Doseringen kvantifieras som rälsförhöjning vilket uttrycker differensen i höjd mellan yttre räl och inre räl. Anordnad rälsförhöjning $h_a$ ges som
+\begin{equation}
+    h_a = h_\mathrm{yttre} - h_\mathrm{inre}.
+\end{equation}
+Med hjälp av detta kan lateralacceleration parallellt spårplanet beräknas enligt \parencite{carlos}
+\begin{equation}
+    a_y = \frac{v^2}{r}-g\cdot\sin{\varphi} = \frac{v^2}{r} - g\cdot \frac{h_a}{b}
+\end{equation}
+där $b$ är spårvidden och $\varphi$ är vinkeln av spårplanet mot markplanet.
+
+När kurvor konstrueras eftersträvar man lateral jämvikt. Om kraftresultanten $\vec F_\mathrm{res} = \vec F_c + \vec F_g$ är vinkelrät med spårplanet medför detta att den laterala acceleration $a_y=0$ vilket i sin tur medför lateral jämvikt \parencite{carlos}. När $a_y\neq0$ finns det risk för urspårning eftersom krafterna vid hjulet inte nödvändigtvis kan motstå den mot spårplanet horisontella komposanten av $\vec F_\mathrm{res}$.
+
+När $a_y\neq 0$ råder det antingen rälsförhöjningsbrist eller rälsförhöjningsöverskott. Rälsförhöjningsbrist innebär den höjden som måste adderas till rälsförhöjningen för att uppnå jämvikt om fordonet har en acceleration utåt svängen. Rälsförhöjningsöverskott uppstår när fordonet upplever en acceleration inåt svängen eftersom $F_c$ är för liten. Rälsförhöjningsöverskottet är irrelevant för denna undersökning eftersom den undersöker höghastighetsurspårning där rälsförhöjningsbrist alltid uppstår.
+
+För att beräkna rälsförhöjningsbrist krävs den anordnade rälsförhöjningen $h_a$ och den teoretiska rälsförhöjningen
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{fig/placeholder.png}
+    \caption{PLACEHOLDER. Tagen från \textcite{carlos}.}
+    \label{fig:tågkrafter_doserad}
+\end{figure}
+
 \subsection{Syfte}
 Beskriv här syftet, alltså varför ni vill göra just i den här undersökningen, vad ni vill uppnå med resultaten eller hur resultaten kan bidra till förståelsen av det generella problem ni skrivit om i den teoretiska bakgrunden. Här skriver ni vad ni vill uppnå med ert gymnasiearbete. Ni kan till exempel börja med: Syftet med vårt gymnasiearbete är att beskriva/förklara/utvärdera/förstå … Beskriv också här kort hur ni planerar att uppnå syftet med arbetet. Ni kan till exempel skriva: I det här arbetet kommer vi att undersöka …
 Längd: Ett par meningar
 
 \subsection{Frågeställning}
-\textbf{Fråga:} ''Vad är den maximala hastigheten ett modelltåg i skala 1:40 kan uppnå vid en given kurvradie utan att spåra ur?''
-
-\begin{figure}[h!]
-    \centering
-    \includegraphics[width=0.33\textwidth]{fig/tåg_krafter.png}
-    \caption{Kraftsituationen på en järnvägsvagn vid en vänstersväng där $F_g$ är tyngdkraften, $F_c$ är centrifugalkraften och $l_g$ respektive $l_c$ är deras momentarmar till rotationsaxeln A.}
-    \label{fig:tåg_krafter_sväng}
-\end{figure}
+''Vad är den maximala hastigheten ett modelltåg i skala 1:40 kan uppnå vid en given kurvradie utan att spåra ur?''
 
 \subsection{Empirisk metod}
 Materialen som kommer användas under undersökningen kommer vara: ett 3D printad tåg som väger ca 1,4 kg, en kamera som filmar i minst 240 FPS, ett stativ för att hålla kameran, rutat papper (med sidlängd 1 cm), 3D printade rälssegment.
