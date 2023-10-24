@@ -23,6 +23,7 @@ När en kurva doseras förändras kraftsituationen, som visat i \cref{fig:tågkr
 Med hjälp av detta kan lateralacceleration parallellt spårplanet beräknas enligt \parencite{carlos}
 \begin{equation}
     a_y = \frac{v^2}{r}-g\cdot\sin{\varphi} = \frac{v^2}{r} - g\cdot \frac{h_a}{b}
+    \label{eq:ay}
 \end{equation}
 där $b$ är spårvidden och $\varphi$ är vinkeln av spårplanet mot markplanet.
 
@@ -30,8 +31,15 @@ När kurvor konstrueras eftersträvar man lateral jämvikt. Om kraftresultanten 
 
 När $a_y\neq 0$ råder det antingen rälsförhöjningsbrist eller rälsförhöjningsöverskott. Rälsförhöjningsbrist innebär den höjden som måste adderas till rälsförhöjningen för att uppnå jämvikt om fordonet har en acceleration utåt svängen. Rälsförhöjningsöverskott uppstår när fordonet upplever en acceleration inåt svängen eftersom $F_c$ är för liten. Rälsförhöjningsöverskottet är irrelevant för denna undersökning eftersom den undersöker höghastighetsurspårning där rälsförhöjningsbrist alltid uppstår.
 
-För att beräkna rälsförhöjningsbrist krävs den anordnade rälsförhöjningen $h_a$ och den teoretiska rälsförhöjningen
-
+För att beräkna rälsförhöjningsbristen $h_b$ krävs den anordnade rälsförhöjningen $h_a$ och jämviktsrälsförhöjningen $h_\mathrm{eq}$ som är \parencite{carlos}
+\begin{equation}
+    h_\mathrm{eq} =\frac{b}{g}\cdot \frac{v^2}{r}.
+\end{equation}
+Dessa används sedan för att ge rälsförhöjningsbrist som
+\begin{equation}
+    h_b=h_\mathrm{eq} - h_a
+\end{equation}
+där $h_\mathrm{eq} > h_a$ vilket är ett krav för rälsförhöjningsbrist.
 
 \begin{figure}[h]
     \centering
@@ -39,6 +47,28 @@ För att beräkna rälsförhöjningsbrist krävs den anordnade rälsförhöjning
     \caption{PLACEHOLDER. Tagen från \textcite{carlos}.}
     \label{fig:tågkrafter_doserad}
 \end{figure}
+
+\subsubsection{Statliga säkerhetsdefinitioner}
+Studien utgår från svenska järnvägar. Loket som modelleras är \textit{Siemens Vectron} vilket har en maximal tillåten rälsförhöjningsbrist på \SI{150}{\milli\m} \parencite{}. Enligt trafikverkets specifikation på svensk spårgeometri \parencite{} får detta fordon då uppleva $a_y\leq \SI{0.98}{\m\per\s\squared}$ i lateralacceleration.
+
+Eftersom studien endast behandlar icke-doserade kurvor kommer $a_y=a_c$ alltid gälla där $a_c$ är centrifugalaccelerationen på tåget. Detta är eftersom $\varphi=\SI{0}{\degree}$ i en icke-doserad kurva (se \cref{eq:ay}). Med $a_y= \frac{v^2}{r}$ som givet av en centralrörelse kommer följande gälla:
+\begin{equation}
+    v=\sqrt{a_y r}
+\end{equation}
+samt även
+\begin{equation}
+    r=\frac{v^2}{a_y}.
+    \label{eq:radie_lateral_acc}
+\end{equation}
+
+Svenska tåg färdas i regel med ca. $\SI{200}{\kilo\meter\per\hour} \approx \SI{55.56}{\m\per\s}$ på regionala sträckor. Sätts detta och $a_y=\SI{0.98}{\m\per\s\squared}$, för gränsfallet av fordonet, in i \cref{eq:radie_lateral_acc} ges $r\approx \SI{3800}{\m}$ vilket i studiens skala (1:40) blir $r\approx 3800/40\,\unit{\m} = \SI{80}{\m}$. Detta utgör grunden för valet av kurvradier i \cref{sec:metod}.
+
+\begin{center}
+    \hrule
+    {\large\textbf{Notering:}} \\
+    Mer kommer läggas till i detta kapitel framöver. Detta innefattar bl.a. mer om dynamiken av kurvtagning på en djupare nivå och möjligtvis mer matte vid behöv, men detta kräver läsning av en lärobok som vi endast idag fick tag på. Slutgiltig inlämning kommer att vara mer fyllig.
+    \hrule
+\end{center}
 
 \subsection{Syfte}
 Beskriv här syftet, alltså varför ni vill göra just i den här undersökningen, vad ni vill uppnå med resultaten eller hur resultaten kan bidra till förståelsen av det generella problem ni skrivit om i den teoretiska bakgrunden. Här skriver ni vad ni vill uppnå med ert gymnasiearbete. Ni kan till exempel börja med: Syftet med vårt gymnasiearbete är att beskriva/förklara/utvärdera/förstå … Beskriv också här kort hur ni planerar att uppnå syftet med arbetet. Ni kan till exempel skriva: I det här arbetet kommer vi att undersöka …
@@ -48,6 +78,7 @@ Längd: Ett par meningar
 ''Vad är den maximala hastigheten ett modelltåg i skala 1:40 kan uppnå vid en given kurvradie utan att spåra ur?''
 
 \subsection{Empirisk metod}
+\label{sec:metod}
 Materialen som kommer användas under undersökningen kommer vara: ett 3D printad tåg som väger ca 1,4 kg, en kamera som filmar i minst 240 FPS, ett stativ för att hålla kameran, rutat papper (med sidlängd 1 cm), 3D printade rälssegment.
 
 Undersökningen kommer ske genom att det först väljs en viss radie. Därefter kommer tåget placeras på toppen av en backe med bestämd höjd. Målet med detta är att ge tåget en bestämd hastighet baserad på potentiell energi överförd till kinetisk energi. Sedan släpps tåget och resultaten från kameran och om den spårade ur eller ej skrivs ned. Om tåget inte har spårat ur kommer tåget placeras på en högre höjd och denna process repeteras tills tåget spårar ur. När tåget spårat ur välj en ny radie på kurvan och hela processen börjar om från början. Utöver detta kommer vi även variera masscentrumet genom att placera vikter på olika höjder i modelltåget, detta kommer ske i flera replikat. När alla radier har testats kommer data skrivas in i en graf där hastigheten och radien är grafens axlar.
@@ -55,61 +86,38 @@ Undersökningen kommer ske genom att det först väljs en viss radie. Därefter 
 
 
 \subsection{Tidsplan}
-vecka 40:
-göra klart Projektplans utkastet och beställa kullager samt axlar till tågmodellen
 
-Vecka 41: senaste dagen att lämna in projektplanen (måndag kl 1200) samt renskrivning av projektplan och mer inläsning av fysikaliska och matematiska modeller. utöver detta kada klart tågmodellen
-
-vecka 42: samma som tidigare
-
-vecka 43: inlämning av slutlig Projektplan
-
-Vecka 44: höstlov
-
-vecka 45: slutliga förberedelser för labben och ihopsättning/ kontrollering av modellens kvalite
-
-vecka 46: om modellen visar sig vara av sämre kvalite; bygg om modellen, annars påbörja labben
-
-vecka 47: simulering av expriment på KTH
-
-vecka 48: analys av data
-
-vecka 49: formulera resultat
-
-vecka 50: workshop statistik med excel
-
-vecka 51-1: lov
-
-vecka 2: genomgång felanalys
-
-vecka 3: fortsätt bearbeta resultat och börja med att skriva ned dem
-
-vecka 4: skriva resultat och diskussion
-
-vecka 5: genomgång av naturvetenskaplig rapport och börja skriva resultat och diskussion
-
-vecka 6: fortsätt skriva och börja med abstrakt när vi blir klara med tidigare delar
-
-vecka 7: fortsätt skriva
-
-vecka 8: fortsätt skriva
-
-vecka 9: lov/kris skrivning
-
-vecka 10: genomgång av hur oppositionen går till samt skrivning
-
-vecka 11: inlämning av raport inför oppositionen
-
-vecka 12: förberedelse av oppositionen
-
-vecka 13: oppositioner
-
-vecka 14: oppositioner
-
-vecka 15: lov
-
-vecka 16: revidering av rapport
-
-vecka 17: gymnasiearbetes dag med åk 2
-
-vecka 18: slutinlämning av rapport och allt annat (slut)
+\begin{center}
+    \begin{tabular}{|c||l|}
+        \hline
+        v. 40 & Färdigt utkast för projektplanen \\\hline
+        v. 41 & Deadline: utkast. Arbeta vidare med CAD \\\hline
+        v. 42 & Bearbetning av CAD \\\hline
+        v. 43 & Deadline: projektplan \\\hline
+        v. 44 & Höstlov \\\hline
+        v. 45 & Konstruktion av modellens första prototyp \\\hline
+        v. 46 & Möjlighet att revidera modell \\\hline
+        v. 47 & Simulering på KTH? Annars vidare revidering och/eller labb. \\\hline
+        v. 48 & Labba \\\hline
+        v. 49 & Dataanalys \\\hline
+        v. 50 & Statistikworkshop / Dataanalys \\\hline
+        v. 51--1 & Jullov \\\hline
+        v. 2 & Genomgång: felanalys \\\hline
+        v. 3 & Möjligtvis vidare analys annars börja skriva slutrapport \\\hline
+        v. 4 & Skriv \\\hline
+        v. 5 & Skriv \\\hline
+        v. 6 & Skriv \\\hline
+        v. 7 & Skriv \\\hline
+        v. 8 & Skriv \\\hline
+        v. 9 & Lov och/eller paniksrivning \\\hline
+        v. 10 & Genomgång: opposition. (Panikskrivning?) \\\hline
+        v. 11 & Deadline: rapport for opposition \\\hline
+        v. 12 & Förberedelse av opposition  \\\hline
+        v. 13 & Opposition \\\hline
+        v. 14 & Opposition \\\hline
+        v. 15 & Lov \\\hline
+        v. 16 & Revidering av rapport \\\hline
+        v. 17 & Gymnasiearbetets dag \\\hline
+        v. 18 & Deadline: \textit{allt} \\\hline
+    \end{tabular}
+\end{center}
