@@ -1,53 +1,51 @@
 \section{Projektplan}
 \subsection{Teoretisk bakgrund}
-När ett tåg ska svänga finns det flera aspekter som måste tas hänsyn till, där kurvradien och hastigheten är två av dem. Om denna radie är för liten eller om tågets hastighet är för hög kommer tåget vältas. Detta eftersom centrifugalkraften flyttar tyngdpunkten så den överskrider rotationsaxeln.
+Under ideell kurvtagning verkar två krafter på ett järnvägsfordon: centrifugalkraften $F_c$ och tyngdkraften $F_g$ \parencite{carlos}. I en icke-doserad kurva ser krafterna ut som i \cref{fig:tågkrafter}. Detta innebär även att
+\begin{align}
+    F_c &= \frac{v^2}{r} \\
+    F_g &= mg
+\end{align}
+där $v$ är tågets hastighet tangent med kurvan, $r$ är kurvans radie, $m$ är tågets massa och tyngdaccelerationen $g\approx \SI{9.82}{\m\per\s\squared}$.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{fig/placeholder.png}
+    \caption{PLACEHOLDER. Tagen från \textcite{carlos}.}
+    \label{fig:tågkrafter}
+\end{figure}
+
+
+\subsubsection{Kurvdosering och rälsförhöjning}
+När en kurva doseras förändras kraftsituationen, som visat i \cref{fig:tågkrafter_doserad}. Doseringen kvantifieras som rälsförhöjning vilket uttrycker differensen i höjd mellan yttre räl och inre räl. Anordnad rälsförhöjning $h_a$ ges som
+\begin{equation}
+    h_a = h_\mathrm{yttre} - h_\mathrm{inre}.
+\end{equation}
+Med hjälp av detta kan lateralacceleration parallellt spårplanet beräknas enligt \parencite{carlos}
+\begin{equation}
+    a_y = \frac{v^2}{r}-g\cdot\sin{\varphi} = \frac{v^2}{r} - g\cdot \frac{h_a}{b}
+\end{equation}
+där $b$ är spårvidden och $\varphi$ är vinkeln av spårplanet mot markplanet.
+
+När kurvor konstrueras eftersträvar man lateral jämvikt. Om kraftresultanten $\vec F_\mathrm{res} = \vec F_c + \vec F_g$ är vinkelrät med spårplanet medför detta att den laterala acceleration $a_y=0$ vilket i sin tur medför lateral jämvikt \parencite{carlos}. När $a_y\neq0$ finns det risk för urspårning eftersom krafterna vid hjulet inte nödvändigtvis kan motstå den mot spårplanet horisontella komposanten av $\vec F_\mathrm{res}$.
+
+När $a_y\neq 0$ råder det antingen rälsförhöjningsbrist eller rälsförhöjningsöverskott. Rälsförhöjningsbrist innebär den höjden som måste adderas till rälsförhöjningen för att uppnå jämvikt om fordonet har en acceleration utåt svängen. Rälsförhöjningsöverskott uppstår när fordonet upplever en acceleration inåt svängen eftersom $F_c$ är för liten. Rälsförhöjningsöverskottet är irrelevant för denna undersökning eftersom den undersöker höghastighetsurspårning där rälsförhöjningsbrist alltid uppstår.
+
+För att beräkna rälsförhöjningsbrist krävs den anordnade rälsförhöjningen $h_a$ och den teoretiska rälsförhöjningen
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{fig/placeholder.png}
+    \caption{PLACEHOLDER. Tagen från \textcite{carlos}.}
+    \label{fig:tågkrafter_doserad}
+\end{figure}
+
 \subsection{Syfte}
 Beskriv här syftet, alltså varför ni vill göra just i den här undersökningen, vad ni vill uppnå med resultaten eller hur resultaten kan bidra till förståelsen av det generella problem ni skrivit om i den teoretiska bakgrunden. Här skriver ni vad ni vill uppnå med ert gymnasiearbete. Ni kan till exempel börja med: Syftet med vårt gymnasiearbete är att beskriva/förklara/utvärdera/förstå … Beskriv också här kort hur ni planerar att uppnå syftet med arbetet. Ni kan till exempel skriva: I det här arbetet kommer vi att undersöka …
 Längd: Ett par meningar
 
-\subsection{Frågeställning och hypotes}
-\textbf{Fråga:} ''Vad är den maximala hastigheten ett modelltåg i skala 1:40 kan uppnå vid en given kurvradie utan att spåra ur?''
-
-\textbf{Hypotes:} Betrakta en järnvägsvagn i en vän3stersväng. Utgående från tågets referenssystem kommer kraftsituationen se ut som i \cref{fig:tåg_krafter_sväng}. Tyngdkraften ges som $F_g = mg$ där $m$ är tågets massa och tyngdaccelerationen $g\approx \SI{9.82}{\m\per\s\squared}$. Tågets centripetalacceleration $a_c$ ges som
-\begin{equation}
-        a_c = \frac{v^2}{r}
-\end{equation}
- där $v$ är tågets hastighet tangent med svängen och $r$ är svängens radie. Därefter ges centripetalkraften $F_\mathrm{centripetal}$ genom att sätta $F = ma$ som
- \begin{equation}
-    F_\mathrm{centripetal} = ma_c = \frac{mv^2}{r}.
- \end{equation}
- I tågets accelererande referenssystem kommer även centrifugalkraften $F_c$ finnas som
- \begin{equation}
-    \vec F_c = -\vec F_\mathrm{centripetal}
- \end{equation}
- där sambandet $|\vec F_\mathrm{centripetal}| = |\vec F_c|$ gäller.
-
-Både $F_c$ och $F_g$ utgör moment på fordonet kring en axel (se \cref{fig:tåg_krafter_sväng}). Dessa ges som
-\begin{gather}
-    M_g = F_g l_g \\
-    M_c = F_c l_c.
-\end{gather}
-Man kan sedan intuitivt lista ut att tåget kommer välta när $M_g < M_c$  om positivt moment är utåt svängens riktning. Detta ger följande samband:
-\begin{align*}
-    M_g &< M_c \\
-    F_g l_g &< F_c l_c \\
-    mg l_g &< \frac{mv^2}{r} l_c \\
-    g l_g &< \frac{v^2}{r} l_c \\
-    g r \frac{l_g}{l_c} &< v^2 \\
-    &\left\{
-        \begin{array}{l}
-            v > \sqrt{g r \frac{l_g}{l_c}} \\
-            v < -\sqrt{g r \frac{l_g}{l_c}}
-        \end{array}
-    \right.
-\end{align*}
-
-\begin{figure}[h!]
-    \centering
-    \includegraphics[width=0.33\textwidth]{fig/tåg_krafter.png}
-    \caption{Kraftsituationen på en järnvägsvagn vid en vänstersväng där $F_g$ är tyngdkraften, $F_c$ är centrifugalkraften och $l_g$ respektive $l_c$ är deras momentarmar till rotationsaxeln A.}
-    \label{fig:tåg_krafter_sväng}
-\end{figure}
+\subsection{Frågeställning}
+''Vad är den maximala hastigheten ett modelltåg i skala 1:40 kan uppnå vid en given kurvradie utan att spåra ur?''
 
 \subsection{Empirisk metod}
 Ett 3d printad modelltåg i skala 1:40 (Modellerat efter en SIEMENS Vectron, men hjuprofil S1002 (CITAT)) med en vikt på \num{1.4} kg, en kamera som filmar i minst 240 FPS, ett stativ för att hålla kameran, rutat papper (vars rutor har sidlängd 1 cm) och 3D printade rälssegment i skala 1:40 (utefter UIC60 standard (citat)) med radier: 80, 40, 25, 12, \num{6.5}, \num{3.5}, 2, 1 (m). 
