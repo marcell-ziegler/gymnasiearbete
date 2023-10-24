@@ -5,42 +5,8 @@ När ett tåg ska svänga finns det flera aspekter som måste tas hänsyn till, 
 Beskriv här syftet, alltså varför ni vill göra just i den här undersökningen, vad ni vill uppnå med resultaten eller hur resultaten kan bidra till förståelsen av det generella problem ni skrivit om i den teoretiska bakgrunden. Här skriver ni vad ni vill uppnå med ert gymnasiearbete. Ni kan till exempel börja med: Syftet med vårt gymnasiearbete är att beskriva/förklara/utvärdera/förstå … Beskriv också här kort hur ni planerar att uppnå syftet med arbetet. Ni kan till exempel skriva: I det här arbetet kommer vi att undersöka …
 Längd: Ett par meningar
 
-\subsection{Frågeställning och hypotes}
+\subsection{Frågeställning}
 \textbf{Fråga:} ''Vad är den maximala hastigheten ett modelltåg i skala 1:40 kan uppnå vid en given kurvradie utan att spåra ur?''
-
-\textbf{Hypotes:} Betrakta en järnvägsvagn i en vän3stersväng. Utgående från tågets referenssystem kommer kraftsituationen se ut som i \cref{fig:tåg_krafter_sväng}. Tyngdkraften ges som $F_g = mg$ där $m$ är tågets massa och tyngdaccelerationen $g\approx \SI{9.82}{\m\per\s\squared}$. Tågets centripetalacceleration $a_c$ ges som
-\begin{equation}
-        a_c = \frac{v^2}{r}
-\end{equation}
- där $v$ är tågets hastighet tangent med svängen och $r$ är svängens radie. Därefter ges centripetalkraften $F_\mathrm{centripetal}$ genom att sätta $F = ma$ som
- \begin{equation}
-    F_\mathrm{centripetal} = ma_c = \frac{mv^2}{r}.
- \end{equation}
- I tågets accelererande referenssystem kommer även centrifugalkraften $F_c$ finnas som
- \begin{equation}
-    \vec F_c = -\vec F_\mathrm{centripetal}
- \end{equation}
- där sambandet $|\vec F_\mathrm{centripetal}| = |\vec F_c|$ gäller.
-
-Både $F_c$ och $F_g$ utgör moment på fordonet kring en axel (se \cref{fig:tåg_krafter_sväng}). Dessa ges som
-\begin{gather}
-    M_g = F_g l_g \\
-    M_c = F_c l_c.
-\end{gather}
-Man kan sedan intuitivt lista ut att tåget kommer välta när $M_g < M_c$  om positivt moment är utåt svängens riktning. Detta ger följande samband:
-\begin{align*}
-    M_g &< M_c \\
-    F_g l_g &< F_c l_c \\
-    mg l_g &< \frac{mv^2}{r} l_c \\
-    g l_g &< \frac{v^2}{r} l_c \\
-    g r \frac{l_g}{l_c} &< v^2 \\
-    &\left\{
-        \begin{array}{l}
-            v > \sqrt{g r \frac{l_g}{l_c}} \\
-            v < -\sqrt{g r \frac{l_g}{l_c}}
-        \end{array}
-    \right.
-\end{align*}
 
 \begin{figure}[h!]
     \centering
