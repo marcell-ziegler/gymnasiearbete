@@ -71,19 +71,18 @@ Svenska tåg färdas i regel med ca. $\SI{200}{\kilo\meter\per\hour} \approx \SI
 \end{center}
 
 \subsection{Syfte}
-Beskriv här syftet, alltså varför ni vill göra just i den här undersökningen, vad ni vill uppnå med resultaten eller hur resultaten kan bidra till förståelsen av det generella problem ni skrivit om i den teoretiska bakgrunden. Här skriver ni vad ni vill uppnå med ert gymnasiearbete. Ni kan till exempel börja med: Syftet med vårt gymnasiearbete är att beskriva/förklara/utvärdera/förstå … Beskriv också här kort hur ni planerar att uppnå syftet med arbetet. Ni kan till exempel skriva: I det här arbetet kommer vi att undersöka …
-Längd: Ett par meningar
+Syftet med denna undersökning är att bekräfta tidigare idéer om säkra hastigheter i bestämda radier samt förklara sambandet mellan radier, hastighet och när ett tåg spårar ut. Detta kan sedan användas för att enklare planera och konstruera säkra järnvägar. Bättre förståelse av säkra kurvtagningshastigheter ger oss möjlighet att optimera de nya men även de befintliga järnvägarna för att minska restider. Det är ett stort problem att Sveriges järnvägar har många kurvor \parencite{} och denna förståelse kan bidra till planeringen av järnvägens rätande.
 
 \subsection{Frågeställning}
 ''Vad är den maximala hastigheten ett modelltåg i skala 1:40 kan uppnå vid en given kurvradie utan att spåra ur?''
 
 \subsection{Empirisk metod}
 \label{sec:metod}
-Materialen som kommer användas under undersökningen kommer vara: ett 3D printad tåg som väger ca 1,4 kg, en kamera som filmar i minst 240 FPS, ett stativ för att hålla kameran, rutat papper (med sidlängd 1 cm), 3D printade rälssegment.
+Ett 3d printad modelltåg i skala 1:40 (Modellerat efter en SIEMENS Vectron, men hjuprofil S1002 \parencite{}) med en vikt på \num{1.4} kg, en kamera som filmar i minst 240 FPS, ett stativ för att hålla kameran, rutat papper (vars rutor har sidlängd 1 cm) och 3D printade rälssegment i skala 1:40 (utefter UIC60 standard \parencite{}) med radier: 80, 40, 25, 12, \num{6.5}, \num{3.5}, 2, 1 (m).
 
-Undersökningen kommer ske genom att det först väljs en viss radie. Därefter kommer tåget placeras på toppen av en backe med bestämd höjd. Målet med detta är att ge tåget en bestämd hastighet baserad på potentiell energi överförd till kinetisk energi. Sedan släpps tåget och resultaten från kameran och om den spårade ur eller ej skrivs ned. Om tåget inte har spårat ur kommer tåget placeras på en högre höjd och denna process repeteras tills tåget spårar ur. När tåget spårat ur välj en ny radie på kurvan och hela processen börjar om från början. Utöver detta kommer vi även variera masscentrumet genom att placera vikter på olika höjder i modelltåget, detta kommer ske i flera replikat. När alla radier har testats kommer data skrivas in i en graf där hastigheten och radien är grafens axlar.
+Undersökningen kommer ske genom att det först väljs en specifik cirkelradie. Därefter kommer tåget placeras en bestämd höjd upp på en kulle. Anledningen till detta är att formeln för tågets potentiella energi då kan användas för att preliminärt beräkna hastigheten (sätt in formler). Om tåget inte spårar ur vid denna hastighet kommer det placeras högre upp i kullen tills gränsen hittas. Då kommer inspelningen från kameran med hjälp av det rutade pappret användas för att mer exakt bestämma hastigheten, denna hastighet tillsammans med radien kommer sedan sparas och användas i resultaten. Detta repeteras sedan med de andra bestämda radierna. När maxhastigheter har hittats för alla radier kommer fördelningen av vikten i tåget förflyttas genom att vikter i tåget placeras högre eller lägre ned.
 
-
+När all data har samlats in kommer den användas för att skapa en regression med hastighet och radie som grafaxlar. Detta kommer göras separat för varje viktfördelning.
 
 \subsection{Tidsplan}
 
